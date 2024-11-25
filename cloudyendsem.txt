@@ -1,0 +1,194 @@
+RMI
+
+
+import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
+public class rServer {
+    public static void main(String[] args) {
+        try{
+            Registry rm=LocateRegistry.createRegistry(1234);
+            rmiin ab=new rmiimp();
+            rm.bind("pr", ab);
+}catch(Exception e){
+    e.printStackTrace();
+}
+    }
+    
+}
+
+
+
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
+public class rmiimp extends UnicastRemoteObject implements rmiin{
+    protected rmiimp()throws RemoteException{
+        super();
+    }
+    public String prints(String name)  throws  RemoteException{
+        return "hello"+name;
+
+    }
+}
+
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+public interface rmiin extends Remote{
+public String prints(String name) throws RemoteException;
+}
+
+
+
+import java.rmi.registry.Registry;
+import java.rmi.registry.LocateRegistry;
+public class rclient{
+    public static void main(String[] args) {
+        try{
+            Registry rm=LocateRegistry.getRegistry(1234);
+            rmiin ab=(rmiin) rm.lookup("pr");
+            String mes="ansari";
+            String res=ab.prints(mes);
+            System.out.println(res);
+            
+}catch(Exception e){
+    e.printStackTrace();
+}
+    }
+    
+}
+=------==================================================================================================================
+
+
+rpc
+java -cp "E:\practice\lib\*;."  rpserver
+javac -cp "E:\practice\lib\*;." -Xlint:deprecation rpserver.java rpclient.java
+
+
+https://drive.google.com/drive/folders/1K7Tucfrkaey60U_yY8QgFRw4g9205_ff?usp=sharing
+
+
+
+
+============================================================================================================================
+soap
+pip install zeep
+from zeep import Client
+wsdl="http://www.dneonline.com/calculator.asmx?WSDL"
+client=Client(wsdl)
+num1=10
+num2=10
+response =client.service.Add(num1,num2)
+print(response)
+
+
+-===========================================================================================================================
+
+
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class chatserver {
+    public static void main(String[] args) {
+        try(ServerSocket ss=new ServerSocket(1234)){
+            Socket s=ss.accept();
+            System.out.println("client accepted");
+            BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
+            PrintWriter pw=new PrintWriter(s.getOutputStream(),true);
+            while (true){
+                String cl=br.readLine();
+                System.out.println("client:"+cl);
+                Scanner in=new Scanner(System.in);
+                System.out.println("server:");
+                String ser=in.nextLine();
+                pw.println(ser);                
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+}
+
+
+
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class chatclient{
+    public static void main(String[] args) {
+        try(Socket s=new Socket("192.168.137.1",1234)){
+            System.out.println("client accepted");
+            BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
+            PrintWriter pw=new PrintWriter(s.getOutputStream(),true);
+            while (true){
+                
+                Scanner in=new Scanner(System.in);
+                System.out.println("cient:");
+                String ser=in.nextLine();
+                pw.println(ser);
+                String cl=br.readLine();
+                System.out.println("server:"+cl);             
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+}
+
+
+==================================================================================================================================================
+
+ec2
+
+To download and install the Apache server on Ubuntu via the command line, follow these steps:
+
+### 1. **Update the package list**
+   Make sure your system's package list is up-to-date:
+   ```bash
+   sudo apt update
+   ```
+
+### 2. **Install Apache**
+   Install the Apache HTTP server package:
+   ```bash
+   sudo apt install apache2 -y
+   ```
+
+### 3. **Check the installation**
+   Verify that Apache is installed and running:
+   ```bash
+   sudo systemctl status apache2
+   ```
+
+   - To start Apache (if not already running):
+     ```bash
+     sudo systemctl start apache2
+     ```
+   - To enable Apache to start at boot:
+     ```bash
+     sudo systemctl enable apache2
+     ```
+
+### 4. **Check the Apache server**
+   Open a web browser and navigate to:
+   ```
+   http://localhost
+   ```
+   or the server's IP address. You should see the default Apache welcome page.
+
+Let me know if you need further assistance!
+
+
+========================================================================================================================================================
+
+
+
+
+
+
+
